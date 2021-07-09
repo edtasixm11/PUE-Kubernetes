@@ -162,5 +162,41 @@ Despliegue de Aplicaciones Kubernetes/Laboratorios-Ejemplos-TXT/
 ```
 
 
+### Instal·lació / Desplegament
 
+Per treballar ab un Kubernetes real el curs utilitza un desplegament en Vagrant 
+preparat pel professor, hi ha dos mecanismes per fer el desplegament:
+ * Descarregar el GIT del professor i desplegar Vagrant. 
+ * Usar la propia estructura descarregada i usar el Vagrant que hi ha en un dels zips.
+
+
+**Descarrega via GIT del professor**
+
+Aquest procediment consisteix en:
+ * [ Prèvia ] Per poder fer el desplegament cal tenir instal·lat VirtualBox i Vagrant.
+ * Descarregar el GIT del professor localment generant un directori anomenat *kubernetes*. 
+ * Dins d'aquest directori descomprimir tres dels fitxers zip de documentació i labs.
+ * També hi ha el fitxer de desplegament *Vagrant* que generarà de manera automàtica tot el 
+laboratori (els tres nodes ja configurats). Cal realitzar l'ordre *vagrant up* Aquest procés
+pot fallar (per timeout), simplement tornar a insistir.
+ * Un cop desplegades les tres màquines amb Vagrant connectar-se al node *Master* amb l'ordre
+*vagrant ssh master* que automàticament inicia una sessió per ssh dins d'aquest node.
+ * Verificar que un cop dins el Lab desplegat per Vagrant els tres nodes estan en funcionament
+ i actius amb l'ordre *kubectl get nodes*. S'han de mostrar els tres nodes: master, worker1 i 
+worker2.
+
+```
+git clone https://github.com/agarciafer/kubernetes.git
+cd kubernetes
+sudo unzip kubernetes-curso.zip
+sudo unzip k8-for-devs-master.zip
+sudo unzip kubernetes-labs2.zip
+
+vagrant up
+vagrant ssh master
+#ssh vagrant@10.0.0.10
+
+cd /vagrant
+kubectl get nodes
+```
 
