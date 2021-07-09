@@ -1,7 +1,7 @@
 # PUE Kubernetes Juliol 2020
 ## Curs 2020 - 2021
 
-### Descripció de materials
+## Descripció de materials
 
  * Despliegue de Aplicaciones Kubernetes.zip
  * kubernetes-Helm3-API-Metrics-Server.zip
@@ -162,7 +162,7 @@ Despliegue de Aplicaciones Kubernetes/Laboratorios-Ejemplos-TXT/
 ```
 
 
-### Instal·lació / Desplegament
+## Instal·lació / Desplegament
 
 Per treballar ab un Kubernetes real el curs utilitza un desplegament en Vagrant 
 preparat pel professor, hi ha dos mecanismes per fer el desplegament:
@@ -230,7 +230,7 @@ kubectl get nodes
 ``` 
 
 
-### Laboratori 
+## Laboratori 
 
 Aquest curs del PUE de Kubernetes utilitza un laboratori amb tres màquines Virtuals Centos
 lleugeres però amb 2GB de RAM cada una. Les anomena:
@@ -267,8 +267,17 @@ kubectl get pods, services, deploys
 ```
 
 
+## Documentació
 
+A part de la documentació d'aquest curs es recomana consultar:
 
+ * GIT edtasim11 https://github.com/edtasixm11/PUE-Kubernetes
+ * Kubernetes Documentation https://kubernetes.io/docs/home/
+ * k8s
+ * Projecte ASIX 2021-Kubernetes (Roberto / Alejandro) https://gitlab.com/edtasixm14/2021-kubernetes
+ * Projecte ASIX 2020-Kubernetes-Roberto https://gitlab.com/edtasixm14/2020-kubernetes-roberto
+ * Projecte ASIX 2020-Kubernetes-Marc https://gitlab.com/edtasixm14/2020-kubernetes-marc
+ * Projecte ASIX 2020-Kubernetes (Jorge) https://gitlab.com/edtasixm14/2020-kubernetes
 
 
 
