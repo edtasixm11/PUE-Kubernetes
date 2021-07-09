@@ -13,7 +13,11 @@
  * Vagrantfile
 
 
-** Despliegue de Aplicaciones Kubernetes.zip **
+Hi ha dos .zip que en expandir-se generen tot el material del curs. Es llista el 
+contingut dels dos zips (un nivell) i també els directoris amb documentació i 
+labs del seu interior que s'han usat durent el curs.
+
+**Despliegue de Aplicaciones Kubernetes.zip**
 ```
 Despliegue de Aplicaciones Kubernetes
 ├── 1-Laboratorios  Kubernetes 2020.pdf
@@ -33,7 +37,7 @@ Despliegue de Aplicaciones Kubernetes
 └── Seminario kubernetes Troubleshooting  Deployments Applications.pdf
 ```
 
-** kubernetes-Helm3-API-Metrics-Server.zip **
+**kubernetes-Helm3-API-Metrics-Server.zip**
 ```
 kubernetes-Helm3-API-Metrics-Server
 ├── ClusterRoleBinding.yml
@@ -43,7 +47,7 @@ kubernetes-Helm3-API-Metrics-Server
 └── service-account.yml
 ```
 
-** Despliegue de Aplicaciones Kubernetes/kubernetes-curso/ **
+**Despliegue de Aplicaciones Kubernetes/kubernetes-curso/**
 ```
 Despliegue de Aplicaciones Kubernetes/kubernetes-curso/
 ├── affinity
@@ -91,7 +95,7 @@ Despliegue de Aplicaciones Kubernetes/kubernetes-curso/
 └── wordpress-volumes
 ```
 
-** Despliegue de Aplicaciones Kubernetes/kubernetes-labs2/  **
+**Despliegue de Aplicaciones Kubernetes/kubernetes-labs2/**
 ```
 Despliegue de Aplicaciones Kubernetes/kubernetes-labs2/
 ├── deployments
@@ -113,7 +117,7 @@ Despliegue de Aplicaciones Kubernetes/kubernetes-labs2/
 └── volumes
 ```
 
-** Despliegue de Aplicaciones Kubernetes/k8-for-devs-master/ **
+**Despliegue de Aplicaciones Kubernetes/k8-for-devs-master/**
 ```
 Despliegue de Aplicaciones Kubernetes/k8-for-devs-master/
 ├── deployments
@@ -130,7 +134,7 @@ Despliegue de Aplicaciones Kubernetes/k8-for-devs-master/
 └── voting-app
 ```
 
-** Despliegue de Aplicaciones Kubernetes/Laboratorios-Ejemplos-TXT/ **
+**Despliegue de Aplicaciones Kubernetes/Laboratorios-Ejemplos-TXT/**
 ```
 Despliegue de Aplicaciones Kubernetes/Laboratorios-Ejemplos-TXT/
 ├── Añadir carga el contenedor web1.txt
