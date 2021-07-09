@@ -266,6 +266,11 @@ kubectl get services
 kubectl get pods, services, deploys
 ```
 
+Vagrant automàticament crea dins de cada una de les màquines un directori anomenat **/Vagrant** que 
+és un directori compartit entre totes elles tres i el host amfitrió, en el mateix directori des d'on
+s'ha fet *vagrant up*. És a dir, tots els fitxers d'exercicis, exemples, etc estan disponibles **dins**
+de les màquines virtuals indicant la ruta **/vagrant/ruta-al-fitxer**.
+
 
 ## Documentació
 
