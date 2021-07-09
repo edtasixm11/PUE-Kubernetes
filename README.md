@@ -202,7 +202,7 @@ kubectl get nodes
 
 **Desplegament usant el contingut del zip**
 
-Per fer el desplegament amb *Vagrant* simplement cal tenir instal3lat *Virtualbox* i *Vagrant* i 
+Per fer el desplegament amb *Vagrant* simplement cal tenir instal·lat *Virtualbox* i *Vagrant* i 
 fer el desplegament usant el fitxer *Vagrantfile* ja preparat. Els passos són:
  * [ Prèvia ] Per poder fer el desplegament cal tenir instal·lat VirtualBox i Vagrant.
  * Accedir al directori *mv-kubernetes-Vagrant-2020* (dins de *Despliegue de Aplicaciones Kubernetes*) que conté el *Vagrantfile*. 
@@ -230,6 +230,18 @@ kubectl get nodes
 ``` 
 
 
+### Laboratori 
+
+
+Aquest curs del PUE de Kubernetes utilitza un laboratori amb tres màquines Virtuals Centos
+lleugeres però amb 2GB de RAM cada una. Les anomena:
+  * master (10.0.0.10)
+  * worker1 (10.0.0.11)
+  * worker2 (10.0.0.12)
+
+Com el seu nom indica es tracta d'un node master de kubernetes i dos nodes worker (o minions).
+Aquests laboratori utilitza una xarxa software virtual amb adreça **IP 10.0.0.0/24**. El host
+amfitrió té la interfície *10.0.0.1*, i els nodes la que s'indica al llistat.
 
 
 
