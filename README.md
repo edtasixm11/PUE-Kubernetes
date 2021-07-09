@@ -271,6 +271,14 @@ Vagrant automàticament crea dins de cada una de les màquines un directori anom
 s'ha fet *vagrant up*. És a dir, tots els fitxers d'exercicis, exemples, etc estan disponibles **dins**
 de les màquines virtuals indicant la ruta **/vagrant/ruta-al-fitxer**.
 
+Ordres Vagrant bàsiques:
+```
+vagrant up
+vagrant ssh node
+vagrant halt
+vagrant destroy -f
+
+```
 
 ## Documentació
 
