@@ -1,0 +1,37 @@
+#Para relacionar un pv con un pvc de forma estatica por las labels en este caso tier: mysql
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-persistent-storage-pv
+  labels:
+    app: wordpress
+    tier: mysql
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.0.0.10
+    # Exported path of your NFS server
+    path: "/proyecto1-mysql"
+	
+----	
+
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-persistent-storage-pvc
+  labels:
+    app: wordpress
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 6Gi
+  selector:
+    matchLabels:
+      tier: "mysql"	

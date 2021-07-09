@@ -1,0 +1,19 @@
+docker run -dti --name web-1 httpd
+docker exec -ti web-1 /bin/bash
+root@22e7d91e3293:/usr/local/apache2# apt-get update
+
+root@22e7d91e3293:/usr/local/apache2# apt-get install wget
+
+
+
+while true; do wget -q -O- http://127.0.0.1 ;done
+
+
+----------------------------------------
+metricbeat modules enable docker
+metricbeat modules list
+vi /etc/metricbeat/modules.d/docker.yml
+
+
+[root@elk modules.d]# systemctl restart metricbeat.service
+[root@elk modules.d]# systemctl status metricbeat.service

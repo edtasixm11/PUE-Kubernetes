@@ -1,0 +1,32 @@
+nbrown/nginxhello:1.12.1
+puerto 80
+Deploymnet
+Service de tipo NodePort
+
+kubectl run my-nginx --image=nbrown/nginxhello:1.12.1 --port=80
+kubectl expose deployment my-nginx --type=NodePort --name my-nginx-service
+
+kubectl set image deployment/my-nginx my-nginx=nbrown/nginxhello:1.13.5
+
+kubectl rollout undo deployment my-nginx
+
+kubectl edit deployment/my-nginx
+spec:
+      containers:
+      - image: nbrown/nginxhello:1.13.5
+	  
+kubectl create -f deployment-nginxhello.yml
+spec:
+      containers:
+      - name: nginx-hello
+        image: nbrown/nginxhello:1.12.1
+
+kubectl apply -f deployment-nginxhello.yml
+
+spec:
+      containers:
+      - name: nginx-hello
+        image: nbrown/nginxhello:1.13.5
+  
+	  
+

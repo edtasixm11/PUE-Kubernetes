@@ -1,0 +1,38 @@
+##Partimos el lab con estas dos versiones de imagenes:
+wardviaene/k8s-demo
+wardviaene/k8s-demo:2
+
+kubectl apply -f kubernetes-curso/deployment/helloworld.yml --record
+
+Visualizamos el estado de nuestro deployment:
+# kubectl rollout status deployment helloworld-deployment
+
+
+##Declarar un servicio:
+kubectl expose deployment helloworld-deployment --type=NodePort
+kubectl get service 
+kubectl describe service helloworld-deployment
+
+
+##Para cambiar la imagen de version:
+kubectl set image deployment/helloworld-deployment k8s-demo=wardviaene/k8s-demo:2 --record
+kubectl apply -f kubernetes-curso/deployment/helloworld.yml --record
+kubectl edit deployment helloworld-deployment --record
+
+##Escalar los pod, es decir el deployment:
+kubectl scale deployment helloworld-deployment --replicas=4
+
+
+Ahora podemos ver el historial del las veriones de nuestro deployment:
+# kubectl rollout history deployment helloworld-deployment
+
+REVISION  CHANGE-CAUSE
+1         kubectl apply --filename=kubernetes-curso/deployment/helloworld.yml --record=true
+2         kubectl set image deployment/helloworld-deployment k8s-demo=wardviaene/k8s-demo:2 --record=true
+
+
+Ahora podemos volver a tras en nuestra aplicaciones, es decir a la versión anterior:
+# kubectl rollout undo deployment helloworld-deployment
+
+
+kubectl rollout undo deployment helloworld-deployment --to-revision=2

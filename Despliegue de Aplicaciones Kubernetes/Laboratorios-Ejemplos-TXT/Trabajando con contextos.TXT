@@ -1,0 +1,36 @@
+kubectl get ns
+kubectl create ns cta
+kubectl describe ns cta
+kubectl get pod  --all-namespace
+kubectl get all  --all-namespace
+kubectl config get-contexts
+kubectl get all -n cta
+kubectl get all --namespace=cta
+
+kubectl config set-context --current --namespace cta
+
+kubectl config get-contexts
+
+
+kubectl config set-context --current --namespace default
+
+-----------------------------------------------------------------------
+https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-memory-cpu-namespace/
+git pull
+Creamos el ns preproduccion
+kubectl config set-context --current --namespace preproduccion
+kubectl config get-contexts
+kubectl get pods -n preproduccion
+
+
+kubeclt create namespace preproduccionç
+kubectl apply -f /vagrant/quota.yml -n preproduccion
+
+kubeclt describe ns preproduccion
+kubectl apply -f /vagrant/kubernetes-curso/deployment/helloworld.yml -n preproduccion
+
+kubectl describe ns preproduccion
+kubectl scale deployment -n preproduccion helloworld-deployment --replicas=6
+kubectl scale deployment -n preproduccion helloworld-deployment --replicas=12
+
+

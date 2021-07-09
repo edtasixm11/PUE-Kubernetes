@@ -1,0 +1,35 @@
+##Laboratorio pagina 37 pdf labs1
+image:
+wardviaene/k8s-demo
+wardviaene/k8s-demo:2
+
+
+kubectl apply -f /vagrant/kubernetes-curso/deployment/helloworld.yml --record
+kubectl get deployment,rs,pod
+kubectl expose deployment helloworld-deployment --type=NodePort
+kubectl describe service helloworld-deployment
+
+kubectl set image deployment/helloworld-deployment k8s-demo=wardviaene/k8s-demo:2 --record
+
+# kubectl rollout history deployment helloworld-deployment
+REVISION        CHANGE-CAUSE
+1               kubectl create -f /kubernetes-curso/deployment/helloworld.yml --record
+2               kubectl set image deployment/helloworld-deployment k8s-demo=wardviaene/k8s-demo:2  
+
+Ahora podemos volver a tras en nuestra aplicaciones, es decir a la versión anterior:
+# kubectl rollout undo deployment helloworld-deployment
+
+kubectl set image deployment/helloworld-deployment k8s-demo=wardviaene/k8s-demo:2 --record
+
+# kubectl rollout history deployment helloworld-deployment
+
+Ahora podemos comprobar que tenemos 3 revisiones
+# kubectl rollout history deployment helloworld-deployment
+Ahora volvemos a la revison 3, que en realidad es una nueva revisión porque se ha convertido en la 6.
+# kubectl rollout undo deployment helloworld-deployment --to-revision=3
+
+
+kubectl scale deployment helloworld-deployment --replicas=5
+
+kubectl delete deployment helloworld-deployment
+kubectl delete -f /kubernetes-curso/deployment/helloworld.yml

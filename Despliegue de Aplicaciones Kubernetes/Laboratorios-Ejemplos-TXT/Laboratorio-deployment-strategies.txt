@@ -1,0 +1,38 @@
+##Deployment Canary
+
+Deployment canary es la v2 de nuestra aplicacion
+Deployment v1 es la v1 de nuestra aplicacion
+
+kubectl apply -f /vagrant/Laboratorio-deployment-strategies/deployment-canary/
+
+kubectl get pod -o wide
+scale deployment canary --replicas=3
+scale deployment v1 --replicas=1
+
+kubectl edit service entry-point
+selector:
+    name: app
+
+Test balanceo:
+for i in `seq 1 20`; do curl http://10.0.0.10:PORT/; done
+
+
+curl http://10.0.0.10:PORT/
+
+--------------------------------------------------------------------------
+
+##Deployment-blue-green
+
+kubectl apply -f /vagrant/Laboratorio-deployment-strategies/deployment-blue-green/
+
+kubectl edit service entry-point
+selector:
+    version: "2.0.0"
+	
+Test balanceo:
+for i in `seq 1 20`; do curl http://10.0.0.10:PORT/; done
+	
+curl http://10.0.0.10:PORT/
+	
+kubectl delete deployments  blue
+

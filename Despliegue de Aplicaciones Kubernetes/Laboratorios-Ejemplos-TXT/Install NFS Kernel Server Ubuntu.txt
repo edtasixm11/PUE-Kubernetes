@@ -1,0 +1,22 @@
+Install NFS Kernel Server Ubuntu en el nodo master de los laboratorios (10.0.0.10):
+
+$ sudo apt install nfs-kernel-server
+$ sudo mkdir /bd-nfs
+$ sudo chmod 777  /bd-nfs/
+$ sudo chown nobody:nogroup  /bd-nfs/
+
+$ sudo vi /etc/exports
+/bd-nfs *(rw,no_root_squash)
+
+$sudo systemctl restart nfs-kernel-server
+$sudo systemctl status nfs-kernel-server
+
+
+
+
+
+
+
+$sudo systemctl restart nfs-kernel-server
+$sudo systemctl enable nfs-kernel-server
+$sudo systemctl status nfs-kernel-server

@@ -1,0 +1,17 @@
+nbrown/nginxhello:1.12.1
+nbrown/nginxhello:1.13.5
+puerto 80
+Deploymnet
+Service de tipo NodePort
+---------------------------------------------------
+
+
+kubectl create deployment ejercicio --image=nbrown/nginxhello:1.12.1
+
+kubectl get deployments
+kubectl expose deployment ejercicio --type=NodePort
+kubectl get services
+kubectl get service ejercicio
+kubectl set image deployments/ejercicio ejercicio=nbrown/nginxhello:1.13.5
+kubectl rollout status deployment ejercicio
+kubectl rollout history deployment ejercicio

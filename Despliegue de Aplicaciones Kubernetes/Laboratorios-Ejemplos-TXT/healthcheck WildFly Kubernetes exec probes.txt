@@ -1,0 +1,21 @@
+..
+  containers:
+  - name: hello-joker
+    image: docker.example.com/hello:1
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+	  initialDelaySeconds: 2
+      periodSeconds: 5 
+      exec:
+        command:
+          - /bin/sh
+          - -c
+          - /opt/jboss/wildfly/bin/jboss-cli.sh --connect --commands=ls | grep 'server-state=running'
+    readinessProbe:
+	  initialDelaySeconds: 30
+      periodSeconds: 5
+      exec:
+        command:
+          - /bin/sh
+          - -c
+          - /opt/jboss/wildfly/bin/jboss-cli.sh --connect --commands=ls | grep 'server-state=running'

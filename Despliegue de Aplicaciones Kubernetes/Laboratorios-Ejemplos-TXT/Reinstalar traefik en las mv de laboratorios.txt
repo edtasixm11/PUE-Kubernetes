@@ -1,0 +1,17 @@
+watch kubectl get pod -n kube-system  -o wide
+
+kubectl delete daemonsets traefik-ingress-controller -n kube-system
+
+------------------------------------------------------------------------------------------------
+
+
+##Instalar traefik 1.7 en cluster kubernetes:
+
+kubectl apply -f https://raw.githubusercontent.com/containous/traefik/v1.7/examples/k8s/traefik-rbac.yaml
+kubectl apply -f https://raw.githubusercontent.com/containous/traefik/v1.7/examples/k8s/traefik-ds.yaml
+
+
+kubectl get pod -o wide -n kube-system
+ 
+traefik-ingress-controller-5lzgq   1/1     Running   15         52d   10.244.1.234   worker1   <none>           <none>
+traefik-ingress-controller-qmzqx   1/1     Running   14         52d   10.244.2.246   worker2   <none>           <none>

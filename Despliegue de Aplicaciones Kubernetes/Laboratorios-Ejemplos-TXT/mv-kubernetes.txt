@@ -1,0 +1,23 @@
+https://drive.google.com/drive/folders/1RdPXZfIRfjoOghbFYpw9ESlsNBpYacjQ
+
+
+VirtualBox Host-Only Network -->10.0.0.2/24
+
+master-->10.0.0.10
+worker1-->10.0.0.11
+worker2-->10.0.0.12
+
+usuario: vagrant
+pass: vagrant
+
+usurio:root
+pass: vagrant
+
+vagrant@master:~$ kubectl get nodes
+NAME      STATUS   ROLES    AGE    VERSION
+master    Ready    master   321d   v1.13.5
+worker1   Ready    <none>   321d   v1.13.5
+worker2   Ready    <none>   321d   v1.13.5
+
+
+watch kubectl get pod --all-namespaces  -o wide

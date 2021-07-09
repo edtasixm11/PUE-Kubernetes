@@ -1,0 +1,36 @@
+vi /vagrant/k8-for-devs-master/pods/pod.yaml
+
+kubectl apply -f /vagrant/k8-for-devs-master/pods/pod.yaml
+
+watch kubectl get pod -o wide
+kubectl get pod -o wide
+
+ kubectl expose pod pod-lab2 --type=NodePort --name=pod-label2-service
+ 
+vi /vagrant/k8-for-devs-master/pods/pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-lab2
+  labels:
+    name: myapp 
+ 
+ ---------------------------------------------------------------------------------
+kubectl apply -f /vagrant/k8-for-devs-master/pods/pod.yaml
+ kubectl expose pod pod-lab2 --type=NodePort --name=pod-label2-service
+
+ 
+ kubectl describe service pod-label2-service
+ 
+ http://10.0.0.11:30639/
+ 
+ 
+ kubectl edit pod pod-lab2
+ apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-lab2
+  labels:
+    name: myapp
+	version: v1
+ kubectl get pod --show-labels

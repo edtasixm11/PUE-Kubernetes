@@ -1,0 +1,58 @@
+ kubectl get pod --namespace=kube-system
+ 
+kubectl port-forward --address 0.0.0.0 pod/nodehelloworld.example.com  8888:3000
+ 
+## Ver todos los pod incluidos los finalizados
+kubectl get pod --show-all
+
+kubectl get pod --show-labels 
+kubectl get pod -l app=nginx
+kubectl get pods --selector=app="nginx"
+
+kubectl get all  -l  aplicacion=cliente1
+ 
+ 
+ 
+# kubectl get pods,rc --selector=app="nginx"
+kubectl get all --selector=app="nginx"
+# kubectl get pod --show-labels
+kubectl get all --selector=app="helloworld" -n pre
+
+ watch  kubectl get pod -o wide
+
+#Obtenemos todas las etiquetas de nuestros nodos:
+ kubectl get nodes --show-labels 
+ kubectl describe nodes worker1
+ 
+#Etiquetamos con un hardware=high-spec al nodo docker2:
+kubectl label nodes docker2 hardware=high-spec 
+ 
+#Eliminar etiquete nodeSelector de un nodo:
+ kubectl label node docker2 hardware-
+ kubectl label node worker1  env-
+ 
+ 
+ kubectl get pod,rc,services -l app=helloworld
+ 
+# kubectl scale --replicas=4 -f /kubernetes-curso/replication-controller/helloworld-repl-controller.yml
+# kubectl scale rc helloworld-controller --replicas=1 
+# kubectl edit rc helloworld-controller
+
+
+# kubectl create -f /kubernetes-curso/deployment/helloworld.yml --record
+# kubectl set image deployment/helloworld-deployment k8s-demo=wardviaene/k8s-demo:2 --record
+
+# kubectl rollout history deployment helloworld-deployment
+REVISION        CHANGE-CAUSE
+1               kubectl create -f /kubernetes-curso/deployment/helloworld.yml --record
+
+##Permitir que en el master puedan correr contenedores
+##Permitir que los pods se ejecuten en el nodo maestro:
+
+kubectl taint nodes --all node-role.kubernetes.io/master-
+
+##Command will list pod name and container name for all pods in the default namespace
+kubectl get pods -o=custom-columns=NAME:.metadata.name,CONTAINERS:.spec.containers[*].name
+
+watch -d -n 1 "kubectl get pod --show-labels; echo ; kubectl get rs -o wide; echo ; kubectl get deployments"
+

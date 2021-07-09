@@ -1,0 +1,36 @@
+kubectl create ns preproduccion
+kubectl describe ns preproduccion
+
+##Aplicamoa la quota con 1 solo pods
+kind: ResourceQuota
+apiVersion: v1
+metadata:
+  name: preproduccion
+  namespace: preproduccion
+spec:
+  hard:
+    pods: '1'
+
+
+kubectl apply  -f quota-object.yaml  --namespace=preproduccion
+kubectl apply -f /kubernetes-curso/deployment/helloworld.yml -n preproduccion
+
+
+kubectl scale deployment helloworld-deployment --replicas=2  -n preproduccion
+
+
+##Modifico el fichero de quota a 3 pods:
+kind: ResourceQuota
+apiVersion: v1
+metadata:
+  name: preproduccion
+  namespace: preproduccion
+spec:
+  hard:
+    pods: '3'
+	
+kubectl apply  -f quota-object.yaml  --namespace=preproduccion
+kubectl describe ns preproduccion
+
+kubectl scale deployment helloworld-deployment --replicas=2  -n preproduccion
+

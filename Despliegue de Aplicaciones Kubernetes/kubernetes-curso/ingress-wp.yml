@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: rules-wp
+spec:
+  rules:
+  - host: wp.curso.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: wordpress-service
+          servicePort: 80

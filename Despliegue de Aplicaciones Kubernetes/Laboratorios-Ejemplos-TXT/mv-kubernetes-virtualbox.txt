@@ -1,0 +1,19 @@
+kubernetes-master
+kubernetes-worker1
+kubernetes-worker2
+
+Virtual-box
+
+kubernetes-master-->10.0.0.10
+kubernetes-worker1-->10.0.0.11
+kubernetes-worker2-->10.0.0.12
+
+##Creara en nuestro equipo un interfaz VirtualBox Host-Only Ethernet Adapter--> 10.0.0.2
+
+usuario:vagrant
+pass:vagrant
+
+root/vagrant
+
+
+

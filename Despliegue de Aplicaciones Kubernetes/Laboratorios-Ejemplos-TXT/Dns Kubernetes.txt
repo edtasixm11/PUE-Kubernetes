@@ -1,0 +1,32 @@
+ kubectl get pod -o wide -n kube-system
+ 
+coredns-66bff467f8-ctbj8           1/1     Running   11         40d   10.244.0.42   master    <none>           <none>
+coredns-66bff467f8-p2lkr           1/1     Running   11         40d   10.244.0.41    master    <none>           <none>
+
+
+kubectl get service -o wide -n kube-system
+kube-dns    ClusterIP   10.96.0.10     <none>        53/UDP,53/TCP,9153/TCP         40d   k8s-app=kube-dns 
+
+kubectl describe  service kube-dns -n kube-system
+Endpoints:         10.244.0.41:9153,10.244.0.42:9153
+
+Deployment-->wp-deployment
+rs-->1
+pod-->1
+service wp-service 
+
+
+Deployment-->mysql-deployment
+rs-->1
+pod-->1
+service msyql-service 
+
+¿Qué se puede resolver?
+• Cada vez que se crea un nuevo servicio se crea un registro de tipo A con el nombre
+ servicio.namespace.svc.cluster.local.
+ 
+ 
+ wp-service.default.svc.cluster.local 
+ msyql-service.default.svc.cluster.local
+
+kubectl run -i --tty centos1 --image=centos --restart=Never -- bash

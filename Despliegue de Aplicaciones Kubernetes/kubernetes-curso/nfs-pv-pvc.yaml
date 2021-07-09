@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: kube-nfs-pv
+spec:
+  #storageClassName: storage-nfs
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 10.0.0.10
+    path: "/bd-nfs"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: kube-nfs-pvc
+spec:
+  #storageClassName: storage-nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi

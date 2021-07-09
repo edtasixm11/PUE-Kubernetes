@@ -1,0 +1,75 @@
+10.0.0.10
+
+/html  --> wordpress-persistent-storage-pv       <----- wordpress-persistent-storage-pvc ---> lo llama el deployment de wordpress
+/mysql --> mysql-persistent-storage-pv           <-----  mysql-persistent-storage-pvc --->  lo llama el deployment de mysql para la aplica de wordpress
+
+
+
+##En el / de nuestro servidor master creamos los directorio mysql y html donde persistiremos nuestra bd de mysql y nuestro wordpress:
+sudo mkdir /{mysql,html} 
+sudo chmod -R 755 /{mysql,html} 
+
+
+###Utilizaremos conmo servidor NFS, nuestro master de kubernetes 10.0.0.10:
+ vi /etc/exports
+/bd-nfs *(rw,no_root_squash)
+/mysql *(rw,no_root_squash)
+/html *(rw,no_root_squash)
+
+sudo systemctl restart  nfs-kernel-server
+
+sudo systemctl status  nfs-kernel-server
+
+
+
+kubectl apply -f /vagrant/kubernetes-curso/WordPress-kubernetes/
+
+Modificar los deployment el API:
+apiVersion: apps/v1
+
+
+kubectl exec -ti wordpress-mysql-678c8cd9d7-sr5rl  -- bash
+df -h
+10.0.0.10:/mysql             62G  5.2G   54G   9% /var/lib/mysql
+
+
+kubectl exec -ti wordpress-77cb844b65-hwmdz  -- bash
+root@wordpress-77cb844b65-hwmdz:/var/www/html# df -h
+10.0.0.10:/html              62G  5.2G   54G   9% /var/www/html
+
+
+http://10.0.0.12:30000/
+-------------------------------------------------------------------------------------------------
+##Montar un ingress para el deployment wp:
+http://wp.curso.local
+
+vi ingress-wp.yml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: rules-wp
+spec:
+  rules:
+  - host: wp.curso.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: wordpress-service
+          servicePort: 80
+		  
+kubectl apply -f ingress-wp.yml		
+
+C:\Windows\System32\drivers\etc\hosts
+10.0.0.11 wp.curso.local
+
+su -
+vi /etc/hosts
+10.0.0.11 wp.curso.local
+
+http://10.0.0.12:8080/dashboard/
+
+http://wp.curso.local
+
+
+kubectl get ingress

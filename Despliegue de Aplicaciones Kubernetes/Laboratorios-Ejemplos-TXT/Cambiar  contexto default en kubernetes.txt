@@ -1,0 +1,46 @@
+##Para ver el contexto po defecto en principio el nasmespace default:
+kubectl config get-contexts
+
+kubectl get ns
+kubectl config set-context --current --namespace=lab
+kubectl create ns miercoles29
+kubectl get all --all-namespaces
+kubectl get pod -n kube-system
+kubectl get pod --namespace=kube-system
+ kubectl describe ns default
+ 
+Crear namespace odec
+crear namespace odec-test
+
+cat quota-object.yaml
+kind: ResourceQuota
+apiVersion: v1
+metadata:
+  name: preproduccion
+  namespace: odec
+  namespace: odec-test
+spec:
+  hard:
+    pods: '10'
+ 
+ 
+ kubectl create -f quota-object.yaml --namespace odec -n preproduccion
+ 
+kubernetes-curso\deployment\helloworld.yml  en el ns odec
+
+Escalarlo a el limite de pods o superior sobre el namespace odec
+Para finalizar el lab el namespace odec es el ns por defecto de nuestro kubernetes
+
+
+kubectl creat ns odec
+kubectl creat ns odec-test
+kubectl create -f quota-object.yaml --namespace odec
+kubectl describe ns odec
+kubeclt apply -f kubernetes-curso\deployment\helloworld.yml -n odec
+kubeclt scale deployment helloworld-deployment --replicas=10 -n odec
+kubectl describe ns odec
+kubeclt scale deployment helloworld-deployment --replicas=12 -n odec
+kubeclt config set-context --current -n odec
+kubectl config get-contexts
+
+

@@ -1,0 +1,26 @@
+nbrown/nginxhello:1.12.1
+nbrown/nginxhello:1.13.5
+puerto 80
+Deploymnet
+Service de tipo NodePort
+Crear namespace martes27
+
+kubectl create ns martes27
+kubectl get ns
+
+kubectl create deployment ejercicio --image=nbrown/nginxhello:1.12.1 -n martes27
+
+kubectl get deployments -n martes27
+kubectl expose deployment ejercicio --type=NodePort --port=80 -n martes27
+kubectl get services -n martes27
+kubectl describe service ejercicio -n martes27
+
+kubectl set image deployments/ejercicio ejercicio=nbrown/nginxhello:1.13.5 -n martes
+kubectl -n martes  rollout status deployment ejercicio
+kubectl -n martes rollout history deployment ejercicio
+
+
+
+
+
+

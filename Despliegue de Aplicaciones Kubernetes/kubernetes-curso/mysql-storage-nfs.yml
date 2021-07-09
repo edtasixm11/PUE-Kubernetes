@@ -1,0 +1,32 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: mysql-storage-nfs
+spec:
+  selector:
+    matchLabels:
+      app: mysql-nfs
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql-nfs
+    spec:
+      containers:
+      - image: mysql:5.7
+        name: mysql
+        env:
+          # Use secret in real usage
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: kube-nfs-pvc 
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: kube-nfs-pvc
+        persistentVolumeClaim:
+          claimName: kube-nfs-pvc

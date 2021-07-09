@@ -1,0 +1,66 @@
+kubectl get ns
+kubectl get namespaces
+
+NAME                   STATUS   AGE
+default                Active   143d
+formacion              Active   137d
+kube-node-lease        Active   143d
+kube-public            Active   143d
+kube-system            Active   143d
+kubernetes-dashboard   Active   105d
+test                   Active   28d
+
+kubectl get pod -n kube-system -o wide
+kubectl get all --all-namespaces
+kubectl describe pod --namespace kube-system  kube-flannel-ds-amd64-dwnv7
+
+
+kubectl create namespace formacion
+kubectl ge ns
+kubectl describe ns formacion
+kubectl run nginx --image=nginx -n formacion
+kubectl get pod -n formacion
+kubectl describe pod nginx -n formacion
+
+
+##Para ver el contexto po defecto en principio el nasmespace default:
+kubectl config get-contexts
+
+kubectl config set-context --current --namespace=formacion
+kubectl config get-contexts
+kubectl get pod
+
+kubectl config set-context --current --namespace=default
+kubectl config get-contexts
+kubectl get pod
+
+------------------------------------------------------------------------
+##Lo aplicamos sobre el ns formacion creado anteriormente:
+
+vi quota-object.yaml
+kind: ResourceQuota
+apiVersion: v1
+metadata:
+  name: formacion
+  namespace: formacion
+spec:
+  hard:
+    pods: '10'
+ 
+ 
+##En una consola monitorizamos el ns formacion:
+ watch kubectl get pod -o wide -n formacion
+
+ 
+ 
+##Aplicamos la quota al ns formacion:
+kubectl create -f quota-object.yaml --namespace formacion
+kubectl describe ns formacion
+
+##Desplegamos en el ns formacion y escamos y tenemos que ver que no se puede crear + 10 pods:
+
+kubeclt apply -f /vagrant/kubernetes-curso\deployment\helloworld.yml -n formacion
+kubeclt scale deployment helloworld-deployment --replicas=10 -n formacion
+kubectl describe ns formacion
+kubeclt scale deployment helloworld-deployment --replicas=12 -n formacion
+

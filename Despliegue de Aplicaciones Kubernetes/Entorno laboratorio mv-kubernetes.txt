@@ -1,0 +1,379 @@
+Moodle Curs: https://lms.pue.es/login/index.php
+Juan Alberto Garcia Fernandez agarciaf@outlook.es alberto@rootdesdezero.com 
+------------------------------------------------------------------------
+VirtualBox/vagrant
+##Tener instalado las ultiamas versiones:
+
+vagrant 
+https://www.vagrantup.com/downloads
+
+virtualbox
+https://www.virtualbox.org/wiki/Downloads
+
+##Boxes que son las mv de vagrant creadas para virtualbox
+
+https://app.vagrantup.com/boxes/search
+-------------------------------------------------------------------------------------------------------------------------------------
+
+c:\mv-kubernetes-2020
+vagrant up
+
+
+VirtualBox Host-Only Network -->10.0.0.1/24
+
+master-->10.0.0.10
+worker1-->10.0.0.11
+worker2-->10.0.0.12
+
+usuario: vagrant
+pass: vagrant
+
+usurio:root
+pass: vagrant
+
+https://labs.pue.es/
+(per parar l'entorn vagrant halt)
+----------------------------------------------------------------------------
+##Para trabajar en el cluster sobre el nodo master con el usuario vagrant.
+
+vagrant ssh master
+
+
+vagrant@master:~$ kubectl get nodes
+NAME      STATUS   ROLES    AGE    VERSION
+master    Ready    master   321d   v1.13.5
+worker1   Ready    <none>   321d   v1.13.5
+worker2   Ready    <none>   321d   v1.13.5
+
+
+watch kubectl get pod --all-namespaces  -o wide
+---------------------------------------------------------------------------
+##Entorno de PUE kubernetes:
+sudo yum install git -y
+sudo apt-get install unzip
+
+cd /
+git clone https://github.com/agarciafer/kubernetes.git
+cd /kubernetes
+sudo unzip kubernetes-curso.zip
+sudo unzip k8-for-devs-master.zip
+sudo unzip kubernetes-labs2.zip
+
+vagrant up
+
+vagrant ssh master
+  ssh vagrant@10.0.0.10
+
+# Ja dins de vagrannt
+cd /vagrant
+kubectl get nodes
+----------------------------------------------------------------------------
+
+cat /vagrant/kubernetes-curso/first-app/helloworld.yml 
+kubectl apply -f /vagrant/kubernetes-curso/first-app/helloworld.yml 
+kubect get pod 
+kubectl get pod -o wide 
+kubectl describe pod nodehelloworld.example.com 
+kubectl expose pod nodehelloworld.example.com --type=NodePort --name nodehelloworld-service 
+kubectl get service 
+kubectl describe service nodehelloworld-service 
+
+     http://10.0.0.12:31408/ http://10.0.0.11:31408/ http://10.0.0.10:31408/ 
+
+kubectl delete service nodehelloworld-service 
+
+------------------------------------------------------------------------
+
+vagrant ssh master
+vagrant@master:~$ kubectl exec -it nodehelloworld.example.com -- bash
+------------------------------------------------------------------------
+
+vagrant ssh worker1
+vagrant@worker1:~$ docker ps
+
+------------------------------------------------------------------------
+https://www.avante.es/video-killed-the-radio-star-o-como-kubernetes-ha-matado-a-docker-o-no/
+https://www.youtube.com/watch?v=2LgiAWtqOoA
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+DIA 2 
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+Juan Alberto Garcia Fernandez agarciaf@outlook.es alberto@rootdesdezero.com 
+
+Practica 2:
+-----------
+kubectl apply -f /vagrant/kubernetes-curso/replication-controller/helloworld-repl-controller.yml 
+kubectl delete -f /vagrant/kubernetes-curso/replication-controller/helloworld-repl-controller.yml 
+kubectl apply -f /cliente1 kubectl scale rc helloworld-controller --replicas=5 
+kubectl scale --replicas=4 -f /vagrant/kubernetes-curso/replication-controller/helloworld-repl-controller.yml 
+kubectl edit rc helloworld-controller 
+
+Kubectl expose rc helloworld-controller --type=NodePort --name helloworld-controlle-service 
+kubectl get service 
+kubectl describe service helloworld-controlle-service 
+
+Pràctica 3:
+-----------
+$ kubectl apply -f kubernetes-labs2/labels/pod.yaml
+$ kubectl get pods --show-labels
+$ kubectl label pods labelex owner=miempresa
+$ kubectl get pods --show-labels
+$ kubectl get pods --selector owner=miempresa
+$ kubectl get pods -l env=development
+$ kubectl apply -f kubernetes-labs2/labels/anotherpod.yaml
+$ kubectl get pods -l 'env in (production, development)'
+$ kubectl delete pods -l 'env in (production, development)'
+$ kubectl delete pods labelex
+$ kubectl delete pods labelexother
+
+Pràctica Deployment
+-------------------
+##Laboratorio pagina 37 pdf labs1
+image:
+wardviaene/k8s-demo
+wardviaene/k8s-demo:2
+
+
+kubectl apply -f /vagrant/kubernetes-curso/deployment/helloworld.yml --record
+kubectl get deployment,rs,pod
+kubectl expose deployment helloworld-deployment --type=NodePort
+kubectl describe service helloworld-deployment
+
+kubectl set image deployment/helloworld-deployment k8s-demo=wardviaene/k8s-demo:2 --record
+
+# kubectl rollout history deployment helloworld-deployment
+REVISION        CHANGE-CAUSE
+1               kubectl create -f /kubernetes-curso/deployment/helloworld.yml --record
+2               kubectl set image deployment/helloworld-deployment k8s-demo=wardviaene/k8s-demo:2  
+
+Ahora podemos volver a tras en nuestra aplicaciones, es decir a la versión anterior:
+# kubectl rollout undo deployment helloworld-deployment
+
+kubectl set image deployment/helloworld-deployment k8s-demo=wardviaene/k8s-demo:2 --record
+
+# kubectl rollout history deployment helloworld-deployment
+
+Ahora podemos comprobar que tenemos 3 revisiones
+# kubectl rollout history deployment helloworld-deployment
+Ahora volvemos a la revison 3, que en realidad es una nueva revisión porque se ha convertido en la 6.
+# kubectl rollout undo deployment helloworld-deployment --to-revision=3
+
+
+kubectl scale deployment helloworld-deployment --replicas=5
+
+kubectl delete deployment helloworld-deployment
+kubectl delete -f /kubernetes-curso/deployment/helloworld.yml
+
+Pracica Kubernetes.io
+----------------------
+Pràctica del LAB de kubernetes documentation: 
+     https://kubernetes.io/es/docs/concepts/workloads/controllers/deployment/ 
+
+kubectl apply -f https://k8s.io/examples/controllers/nginx-deployment.yaml --record
+kubectl expose deployment nginx-deployment --type=NodePort --name nginx-deployment-service
+kubectl --record deployment.apps/nginx-deployment set image deployment.v1.apps/nginx-deployment nginx=nginx:1.9.1
+kubectl rollout status deployment.v1.apps/nginx-deployment
+kubectl rollout history deployment
+kubectl get deployments
+kubectl get rs
+kubectl set image deployment.v1.apps/nginx-deployment nginx=nginx:1.91 --record=true
+kubectl rollout status deployment.v1.apps/nginx-deployment
+kubectl get rs
+kubectl get pods
+kubectl rollout history deployment.v1.apps/nginx-deployment
+kubectl rollout history deployment.v1.apps/nginx-deployment --revision=2
+kubectl rollout undo deployment.v1.apps/nginx-deployment
+kubectl rollout undo deployment.v1.apps/nginx-deployment --to-revision=2
+kubectl get deployment nginx-deployment
+kubectl scale deployment.v1.apps/nginx-deployment --replicas=10
+
+
+Per generar el yaml de un executant-se
+  kubectl get deploy deploymentname -o yaml
+  això passa el deploy actual a un fitxer yaml
+També podem triar el què:
+  kubectl get pod,service -o yaml > /tmp/file.yaml 
+  
+  NO--> kubectl run nginx --image=nginx --dry-run=client -o yaml
+  NO --> kubectl convert -f pod.yaml --local -o json
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+Dia 3: 07/08/2021
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+Namespaces:
+
+ 164  kubectl create namespace formacion
+  165  kubectl get ns
+  166  kubectl describe ns formacion 
+  167  kubectl run nginx --image=nginx  -n formacion
+  168  kubectl get pod
+  169  kubectl get pod -n formacion
+  171  kubectl config set-context --current --namespace=formacion
+  172  kubectl get pod
+  173  kubectl config set-context --current --namespace=default
+  174  kubectl get pod
+
+Quotes als namespaces:
+##Lo aplicamos sobre el ns formacion creado anteriormente:
+
+vi quota-object.yaml
+kind: ResourceQuota
+apiVersion: v1
+metadata:
+  name: formacion
+  namespace: formacion
+spec:
+  hard:
+    pods: '10'
+ 
+ 
+##En una consola monitorizamos el ns formacion:
+ watch kubectl get pod -o wide -n formacion
+
+ 
+ 
+##Aplicamos la quota al ns formacion:
+kubectl create -f quota-object.yaml --namespace formacion
+kubectl describe ns formacion
+
+##Desplegamos en el ns formacion y escamos y tenemos que ver que no se puede crear + 10 pods:
+
+kubeclt apply -f /vagrant/kubernetes-curso\deployment\helloworld.yml -n formacion
+kubeclt scale deployment helloworld-deployment --replicas=10 -n formacion
+kubectl describe ns formacion
+kubeclt scale deployment helloworld-deployment --replicas=12 -n formacion
+
+Documentació de quotes i namespaces:
+https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/quota-memory-cpu-namespace/ 
+
+----------
+Discovery
+----------
+PDF del lab 1 pàgina 132
+Document de text de Ejemplos txt, Dns_kubernetes.txt
+   kubectl get pod -o wide -n kube-system
+ 
+   coredns-66bff467f8-ctbj8           1/1     Running   11         40d   10.244.0.42   master    <none>           <none>
+   coredns-66bff467f8-p2lkr           1/1     Running   11         40d   10.244.0.41    master    <none>           <none>
+
+
+kubectl get service -o wide -n kube-system
+kube-dns    ClusterIP   10.96.0.10     <none>        53/UDP,53/TCP,9153/TCP         40d   k8s-app=kube-dns 
+
+kubectl describe  service kube-dns -n kube-system
+Endpoints:         10.244.0.41:9153,10.244.0.42:9153
+
+Deployment-->wp-deployment
+rs-->1
+pod-->1
+service wp-service 
+
+
+Deployment-->mysql-deployment
+rs-->1
+pod-->1
+service msyql-service 
+
+¿Qué se puede resolver?
+• Cada vez que se crea un nuevo servicio se crea un registro de tipo A con el nombre
+ servicio.namespace.svc.cluster.local.
+ 
+ 
+ wp-service.default.svc.cluster.local 
+ msyql-service.default.svc.cluster.local
+
+kubectl run -i --tty centos1 --image=centos --restart=Never -- bash
+
+Pràctica dns:
+  198  kubectl get pod -o wide -n kube-system
+  199  kubectl get service -o wide -n kube-system
+  200  kubectl describe service kube-dns -n kube-system
+
+
+Pràctica 2 containers en un POD
+-------------------------------
+kubectl apply -f /vagrant/kubernetes-curso/webtest-volum-emptydir.yml 
+kubectl exec -ti webtest -c contenedor2 -- bash
+$ kubectl exec -ti webtest -c contenedor2 -- bash
+$ kubectl exec -ti webtest -c contenedor2 -- bash
+
+HeathCheck
+------------
+Fitxer exemple a k8-for-devs-master/healtchecks.yaml
+Pàgina 84 al 87
+Exemple en un nginx:
+ livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          timeoutSeconds: 10
+ 172  kubectl exec -it deployment-lab-5d6b4d8f8c-4cwrr -- bash
+  173  kubectl get pods
+  174  kubectl exec -it deployment-lab-5d6b4d8f8c-4cwrr -- bash
+  175 
+
+Exemple LAB2 pàgina 7
+ 179  kubectl apply -f /vagrant/kubernetes-labs2/healthz/badpod.yaml 
+  180  kubectl describe pod badpod 
+  181  kubectl get pod -o wide
+  182  kubectl describe pod badpod 
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+Dia 4: 08/07/2021
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+Secrets:
+--------
+   <ABSENT>
+
+Conficgmap
+----------
+kubectl create configmap nginx-config --from-file=kubernetes-curso/configmap/reverseproxy.conf
+kubectl create cm nginx-config --from-file=/vagrant/kubernetes-curso/configmap/reverseproxy.conf 
+kubectl apply -f /vagrant/kubernetes-curso/configmap
+
+
+Traefik, Ingres
+---------------
+watch kubectl get pod -n kube-system  -o wide
+
+kubectl delete daemonsets traefik-ingress-controller -n kube-system
+
+------------------------------------------------------------------------------------------------
+
+
+##Instalar traefik 1.7 en cluster kubernetes:
+
+kubectl apply -f https://raw.githubusercontent.com/containous/traefik/v1.7/examples/k8s/traefik-rbac.yaml
+kubectl apply -f https://raw.githubusercontent.com/containous/traefik/v1.7/examples/k8s/traefik-ds.yaml
+
+
+kubectl get pod -o wide -n kube-system
+ 
+traefik-ingress-controller-5lzgq   1/1     Running   15         52d   10.244.1.234   worker1   <none>           <none>
+traefik-ingress-controller-qmzqx   1/1     Running   14         52d   10.244.2.246   worker2   <none>           <none>
+
+Pràctica ingress: 
+----------------
+kubectl apply -f /vagrant/k8-for-devs-master/ingress/ingress.yml 
+kubectl apply -f /vagrant/k8-for-devs-master/ingress/hola.yml 
+    http://10.0.0.12:8080/dashboard/ hola.curso.local/ 
+kubectl scale deployment hola --replicas=6 http://10.0.0.12:8080/dashboard/ 
+kubectl scale deployment hola --replicas=3 http://10.0.0.12:8080/dashboard/ 
+kubectl scale deployment hola --replicas=1 http://10.0.0.12:8080/dashboard/ 
+
+Videos de youtube del profe de formació:
+----------------------------------------
+https://www.youtube.com/channel/UCaL3Poyh7AWECpI5Ee_38xw 
+
+Carregar les mètriques:
+-----------------------
+vagrant@master:~$ kubectl apply -f /vagrant/kubernetes-Helm3-API-Metrics-Server/metrics-server.yaml 
+kubectl top nodes
+kubectl top pods

@@ -1,0 +1,23 @@
+C:\Windows\System32\drivers\etc\hosts
+10.0.0.11 hola.curso.local
+10.0.0.12 adios.curso.local
+
+su -
+vi /etc/hosts
+10.0.0.11 hola.curso.local
+10.0.0.12 adios.curso.local
+------------------------------------------------------------------------------------------------------
+
+kubectl apply -f /vagrant/k8-for-devs-master/ingress/hola.yml
+kubectl apply -f /vagrant/k8-for-devs-master/ingress/ingress.yml
+
+kubectl scale deployment hola --replicas=5
+kubectl scale deployment hola --replicas=2
+kubectl scale deployment hola --replicas=1
+
+
+
+http://hola.curso.local/
+
+http://10.0.0.12:8080/dashboard/
+http://10.0.0.11:8080/dashboard/
