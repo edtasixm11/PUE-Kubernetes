@@ -278,6 +278,7 @@ A part de la documentació d'aquest curs es recomana consultar:
  * Projecte ASIX 2020-Kubernetes-Roberto https://gitlab.com/edtasixm14/2020-kubernetes-roberto
  * Projecte ASIX 2020-Kubernetes-Marc https://gitlab.com/edtasixm14/2020-kubernetes-marc
  * Projecte ASIX 2020-Kubernetes (Jorge) https://gitlab.com/edtasixm14/2020-kubernetes
+ * Getting Started with Kubernetes. Third Edition. Packt Publishing. Jonathan Baier & Jesse White.
 
 
 
