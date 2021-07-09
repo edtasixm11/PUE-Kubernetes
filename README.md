@@ -232,7 +232,6 @@ kubectl get nodes
 
 ### Laboratori 
 
-
 Aquest curs del PUE de Kubernetes utilitza un laboratori amb tres màquines Virtuals Centos
 lleugeres però amb 2GB de RAM cada una. Les anomena:
   * master (10.0.0.10)
@@ -243,6 +242,29 @@ Com el seu nom indica es tracta d'un node master de kubernetes i dos nodes worke
 Aquests laboratori utilitza una xarxa software virtual amb adreça **IP 10.0.0.0/24**. El host
 amfitrió té la interfície *10.0.0.1*, i els nodes la que s'indica al llistat.
 
+Es pot accedir a cada un dels nodes de manera utomàtica usant la utilitzat de vagrant *vagrant ssh nomNode*.
+Per poder treballar amb vagrant cal estar sempre dins del directori del desplegament, és a dir, el directori 
+*kubernetes* que ha fet el GIT o el directori des d'on s'ha fet el *vagrant up*.
+
+Així per exemple podem conncetar al node master i als nodes worker amb:
+```
+vagrant ssh master
+```
+
+```
+vagrant ssh worker1
+```
+
+Per treballar amb Kerberos es fa des del node **Master** i amb l'ordre **kubectl** es governen
+les accions que es volen realitzar:
+```
+kubectl get nodes
+kubectl get all
+
+kubectl get pods
+kubectl get services
+kubectl get pods, services, deploys
+```
 
 
 
